@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "aoc.h"
 
 int main(int argc, char *argv[]){
@@ -17,10 +18,34 @@ int main(int argc, char *argv[]){
 	}
 	
 	int i;
+	int suma;
 
-	for(i=0;i<size;i++){
-		printf("%c", d[i]);
+	suma = 0;
+
+	char first;
+	char last;
+
+	i = 0;
+	while(i<size){
+		while(i < size && d[i] != '\n' && isdigit(d[i]) == 0){
+			i++;
+		}
+		if(i < size && d[i] != '\n'){ /* isdigit(d[i]) != 0 */
+			first = d[i];
+			i++;
+			last = first;
+			while(i < size && d[i] != '\n'){
+				if(isdigit(d[i])){
+					last = d[i];
+				}
+				i++;
+			}
+			suma += (first - '0')*10 + (last - '0');
+		}
+		i++;
 	}
+
+	printf("%d\n", suma);
 
 	/* bye */
 	free(d);
